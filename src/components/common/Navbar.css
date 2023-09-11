@@ -1,0 +1,12 @@
+#navbar {
+  position: fixed;
+  width: 100%;
+}
+
+#navbar {
+  background-color: #748da6;
+}
+
+.imagenLogo {
+  max-width: 70px;
+}
