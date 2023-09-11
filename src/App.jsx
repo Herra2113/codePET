@@ -1,15 +1,11 @@
-import { useState } from 'react'
-import './App.css'
-
+import "./App.css";
+import Footer from "./components/common/Footer";
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-    <h1>codePET</h1>
-    <h2>Proyecto final</h2>
+      <Footer></Footer>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
