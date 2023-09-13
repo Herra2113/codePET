@@ -22,7 +22,7 @@ const Colaboradores = () => {
                   <h1 className="mb-5 display-3 fw-bold fs-2">
                     Rosales Cecilia
                   </h1>
-                  <h4 className="rollingVet-naranja">Especialista Oncologa</h4>
+                  <h4 className="">Especialista Oncologa</h4>
                   <p className="mx-4 mt-5 fs-6">
                     La Dra. Rosales Cecilia es una médica especialista en
                     oncología dedicada a cuidar la salud de las mascotas en
@@ -53,7 +53,7 @@ const Colaboradores = () => {
                   <h1 className="mb-5 display-3 fw-bold text-center fs-2">
                     Robles Jorge
                   </h1>
-                  <h4 className="rollingVet-naranja text-center">
+                  <h4 className=" text-center">
                     Especialista en Gastroenterologia
                   </h4>
                   <p className="mx-4 mt-5 fs-6">
