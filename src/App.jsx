@@ -5,7 +5,7 @@ import Login from "./components/Login";
 // import { Contacto } from "./components/views/Contacto";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Administrador from "./components/views/Administrador";
-import Colaboradores from "./components/views/Colaboradores";
+import Marcas from "./components/views/Marcas";
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
       <Footer></Footer>
       <Error404 />
       <Contacto /> */}
-      <Colaboradores></Colaboradores>
+      <Marcas></Marcas>
     </>
   );
 }
