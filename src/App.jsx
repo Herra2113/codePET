@@ -1,22 +1,20 @@
 import Footer from "./components/common/Footer";
 import Navegacion from "./components/common/Navbar";
 import Login from "./components/Login";
-// import { Error404 } from "./components/views/Error404";
-// import { Contacto } from "./components/views/Contacto";
+import { Error404 } from "./components/views/Error404";
+import { Contacto } from "./components/views/Contacto";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Administrador from "./components/views/Administrador";
-import Servicios from "./components/views/Servicios";
 
 function App() {
   return (
     <>
-      {/* <Administrador></Administrador>
+      <Administrador></Administrador>
       <Navegacion></Navegacion>
       <Login></Login>
       <Footer></Footer>
       <Error404 />
-      <Contacto /> */}
-      <Servicios></Servicios>
+      <Contacto />
     </>
   );
 }
