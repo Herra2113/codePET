@@ -78,7 +78,7 @@ const AdminTurnos = () => {
     <section className="container">
       <div className="d-flex justify-content-between align-items-center mt-5">
         <h1 className="display-4 ">Turnos</h1>
-        <Button className="btn btn-primary" onClick={handleShow}>
+        <Button className="btn btn-secondary" onClick={handleShow}>
           Agregar turno
         </Button>
       </div>
