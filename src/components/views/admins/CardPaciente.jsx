@@ -3,8 +3,8 @@ import { Col, Card, Button, Row, ListGroup } from "react-bootstrap";
 const CardPaciente = () => {
   return (
     <Col xs={12}>
-      <Card className="border border-5 border-warning m-2">
-        <Card.Body className="container-fluid bg-warning-subtle">
+      <Card className="border border-5 border-secondary m-2">
+        <Card.Body className="container-fluid bg-secondary-subtle">
           <Row className="d-flex justify-content-around p-0">
             <Col
               xs={1}
@@ -34,7 +34,7 @@ const CardPaciente = () => {
               lg={1}
               className="d-flex justify-content-sm-end align-items-start p-0"
             >
-              <Button className="btn btn-warning btn-sm">
+              <Button className="btn btn-secondary btn-sm">
                 <i className="bi bi-pencil-square p-0"></i>
               </Button>
               <Button variant="danger" className="btn-sm">

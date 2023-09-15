@@ -15,7 +15,9 @@ const AdminPacientes = () => {
         <h1>Pacientes</h1>
       </div>
       <div className="d-flex justify-content-end">
-        <Button onClick={handleShow}>Ingrese nuevo paciente</Button>
+        <Button className="btn-secondary" onClick={handleShow}>
+          Ingrese nuevo paciente
+        </Button>
       </div>
       <div className="container">
         <Filtro></Filtro>
