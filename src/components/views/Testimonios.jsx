@@ -40,18 +40,18 @@ export default function Testimonios() {
   return (
     <div className="container d-flex justify-content-center my-4">
       <Row id="serviciosContenedor" className="py-4">
-        <h2 className="letras text-white">Nuestros Clientes Dicen:</h2>
+        <h2 className="letras text-black">Nuestros Clientes Dicen:</h2>
         <Col xs={12} sm={12} md={12} lg={4} className="my-3">
-          <Card sx={{ height: 250, color: "deepOrange" }}>
+          <Card sx={{ height: 250 }}>
             <CardHeader
               avatar={
-                <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                  LT
+                <Avatar sx={{ bgcolor: "black" }} aria-label="recipe">
+                  AN
                 </Avatar>
               }
               title="Ana Carrizo"
               subheader="Septiembre 14, 2023"
-              sx={{ color: "#ff914d" }}
+              sx={{ color: "black" }}
             />
             <CardContent>
               <Typography variant="body2" color="text.secondary">
@@ -62,7 +62,7 @@ export default function Testimonios() {
             </CardContent>
             <CardActions disableSpacing className="align-self-end">
               <IconButton
-                sx={{ color: "#ff914d" }}
+                sx={{ color: "black" }}
                 aria-label="share"
                 onClick={copiarEnlace}
               >
@@ -74,16 +74,16 @@ export default function Testimonios() {
         </Col>
 
         <Col xs={12} sm={12} md={12} lg={4} className="my-3">
-          <Card sx={{ height: 250, color: "deepOrange" }}>
+          <Card sx={{ height: 250, color: "black" }}>
             <CardHeader
               avatar={
-                <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                  MM
+                <Avatar sx={{ bgcolor: "black" }} aria-label="recipe">
+                  FF
                 </Avatar>
               }
               title="Fernando Fernandez"
               subheader="Abril 10, 2021"
-              sx={{ color: "#ff914d" }}
+              sx={{ color: "black" }}
             />
             <CardContent>
               <Typography variant="body2" color="text.secondary">
@@ -94,7 +94,7 @@ export default function Testimonios() {
             </CardContent>
             <CardActions disableSpacing className="">
               <IconButton
-                sx={{ color: "#ff914d" }}
+                sx={{ color: "black" }}
                 aria-label="share"
                 onClick={copiarEnlace}
               >
@@ -105,16 +105,16 @@ export default function Testimonios() {
           </Card>
         </Col>
         <Col xs={12} sm={12} md={12} lg={4} className="my-3">
-          <Card sx={{ height: 250, color: "deepOrange" }}>
+          <Card sx={{ height: 250, color: "black" }}>
             <CardHeader
               avatar={
-                <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                  EC
+                <Avatar sx={{ bgcolor: "black" }} aria-label="recipe">
+                  CH
                 </Avatar>
               }
               title="Carlos Herrera"
               subheader="Abril 05, 2023"
-              sx={{ color: "#ff914d" }}
+              sx={{ color: "black" }}
             />
             <CardContent>
               <Typography variant="body2" color="text.secondary">
@@ -124,7 +124,7 @@ export default function Testimonios() {
             </CardContent>
             <CardActions disableSpacing className="">
               <IconButton
-                sx={{ color: "#ff914d" }}
+                sx={{ color: "black" }}
                 aria-label="share"
                 onClick={copiarEnlace}
               >
@@ -135,16 +135,16 @@ export default function Testimonios() {
           </Card>
         </Col>
         <Col xs={12} sm={12} md={12} lg={4} className="my-3">
-          <Card sx={{ height: 250, color: "deepOrange" }}>
+          <Card sx={{ height: 250, color: "black" }}>
             <CardHeader
               avatar={
-                <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                  LM
+                <Avatar sx={{ bgcolor: "black" }} aria-label="recipe">
+                  JR
                 </Avatar>
               }
               title="Julio Roldan"
               subheader="Marzo 25, 2023"
-              sx={{ color: "#ff914d" }}
+              sx={{ color: "black" }}
             />
             <CardContent>
               <Typography variant="body2" color="text.secondary">
@@ -155,7 +155,7 @@ export default function Testimonios() {
             </CardContent>
             <CardActions disableSpacing className="">
               <IconButton
-                sx={{ color: "#ff914d" }}
+                sx={{ color: "black" }}
                 aria-label="share"
                 onClick={copiarEnlace}
               >

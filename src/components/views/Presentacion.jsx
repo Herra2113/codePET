@@ -56,7 +56,7 @@ const Presentacion = () => {
             <Col xs={12} md={6} className="text-center" id="botonFrase">
               <Link
                 id="boton"
-                className="btn btn-primary rounded-pill btn-lg px-5 fw-bold"
+                className="btn btn-secondary rounded-pill btn-lg px-5 fw-bold"
                 to="/*"
                 role="button"
               >

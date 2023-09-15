@@ -1,5 +1,5 @@
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
-import Nosotros from "../assets/nosotros.jpg";
+import Nosotros from "../assets/nosotros.png";
 import "./about.css";
 import Avatares from "./Avatares";
 

@@ -1,5 +1,5 @@
 #navbar {
-  position: fixed;
+  z-index: 3;
   width: 100%;
 }
 
@@ -9,4 +9,12 @@
 
 .imagenLogo {
   max-width: 70px;
+}
+
+.btn-navbar {
+  max-width: 35vw;
+}
+
+.btn-navbar:hover {
+  border-bottom: black solid thin;
 }
