@@ -46,5 +46,7 @@ export const borrarPaciente = async (id) => {
       method: "DELETE",
     });
     return respuesta;
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 };
