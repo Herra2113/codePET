@@ -4,6 +4,7 @@ import { LockSpinnerLoader, SpinnerLoader } from "../UI";
 import { useFetchGetJson } from "../../../hooks/useFetch";
 import { toast } from "../../../utils";
 import Swal from "sweetalert2";
+/* const API_URL = import.meta.env.VITE_API_DEV; */
 const URL_PUBLICACIONES = import.meta.env.VITE_API_PUBLICACIONES;
 
 export const PublicacionesCrud = () => {
@@ -36,7 +37,7 @@ export const PublicacionesCrud = () => {
     })
       .then((res) => {
         setData(
-          data?.map((d) => {
+          data.map((d) => {
             if (d._id == id) {
               d.active = !active;
             }
@@ -52,7 +53,7 @@ export const PublicacionesCrud = () => {
       })
       .catch((err) => {
         setData(
-          data?.map((d) => {
+          data.map((d) => {
             if (d._id == id) {
               d.active = !active;
             }
@@ -77,18 +78,7 @@ export const PublicacionesCrud = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        if (res.error) {
-          throw new Error("Hubo un error de bd");
-        }
         setData(res);
-        if (res?.length === 0) {
-          toast(
-            "No se encontraron coincidencias",
-            3000,
-            "bg-warning text-white",
-            false
-          );
-        }
       })
       .catch((err) => {
         console.log(err);
