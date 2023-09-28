@@ -7,10 +7,10 @@ const Footer = () => {
         <div className="my-auto">
           <p className="text-center mb-1 fs-4">Nuestras Redes</p>
           <div className="d-flex justify-content-center">
-            <a href="#">
+            <a href="/*">
               <i className="bi bi-facebook mx-3 fs-1 links-redes"></i>
             </a>
-            <a href="#">
+            <a href="/*">
               <i className="bi bi-instagram mx-3 fs-1 links-redes"></i>
             </a>
           </div>

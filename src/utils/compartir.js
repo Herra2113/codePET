@@ -15,15 +15,9 @@ export function compartir(
           return true;
         })
         .catch((err) => {
-          window.alert(
-            "Su navegador no soporta Share API, o no tiene los permisos para usarlo en su navegador / localhost"
-          );
           return false;
         });
     } else {
-      window.alert(
-        "Su navegador no soporta Share API, o no tiene los permisos para usarlo en su navegador / localhost"
-      );
       return false;
     }
   } else {
@@ -39,13 +33,10 @@ export function copiarTexto(texto) {
           .writeText(texto)
           .then()
           .catch(() => {
-            window.alert("¡Error al copiar dato!");
+            alert("¡Error al copiar dato!");
           });
         return true;
       } else {
-        window.alert(
-          "Su navegador no soporta Clipboard API, o no tiene los permisos para usarlo en su navegador / localhost"
-        );
         return false;
       }
     } else {

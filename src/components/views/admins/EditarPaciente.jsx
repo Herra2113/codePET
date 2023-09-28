@@ -1,45 +1,57 @@
+import { useState } from "react";
 import { Form, Button, Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-import { crearPaciente, obtenerListaPacientes } from "../../helpers/pacientes";
+import { editarPaciente, obtenerListaPacientes } from "../../helpers/pacientes";
+import { fechaParseada } from "../../helpers/turnos";
 
-const AgregarPaciente = ({ show, handleClose, setPacientes }) => {
+const EditarPaciente = ({
+  showEditar,
+  handleCloseEditar,
+  datos,
+  setPacientes,
+}) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm();
-  const onSubmit = (pacienteNuevo) => {
-    crearPaciente(pacienteNuevo).then((respuesta) => {
-      if (respuesta.status === 201) {
+
+  const [datosPacientes, setDatosPacientes] = useState(datos);
+
+  const onSubmit = (pacienteEditado) => {
+    editarPaciente(pacienteEditado, datos._id).then((respuesta) => {
+      if (respuesta) {
         Swal.fire(
-          "Paciente creado",
-          `El paciente ${pacienteNuevo.nombreMascota} se creo correctamente`,
+          "Paciente editado",
+          `El paciente  ${pacienteEditado.nombreMascota} se editó correctamente`,
           "success"
         );
-        reset();
-        handleClose();
         obtenerListaPacientes().then((respuesta) => {
+          console.log("entra");
           if (respuesta) {
+            console.log("entra2");
             setPacientes(respuesta);
           }
         });
+        reset();
+        handleCloseEditar();
       } else {
         Swal.fire(
           "error",
-          "No se pudo crear el paciente correctamente, vuelva a intentarlo más tarde",
+          "No se pudo editar el paciente correctamente, vuelva a intentarlo más tarde",
           "error"
         );
       }
     });
-    reset();
   };
+
   return (
     <>
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={showEditar} onHide={handleCloseEditar}>
         <Modal.Header closeButton>
-          <Modal.Title>Ingrese un nuevo paciente</Modal.Title>
+          <Modal.Title>Editar paciente</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit(onSubmit)}>
@@ -48,6 +60,7 @@ const AgregarPaciente = ({ show, handleClose, setPacientes }) => {
               <Form.Control
                 type="text"
                 placeholder="Ingrese un nombre"
+                defaultValue={datos.nombreDuenio}
                 {...register("nombreDuenio", {
                   required: "El nombre es un dato obligatorio",
                   minLength: {
@@ -60,17 +73,23 @@ const AgregarPaciente = ({ show, handleClose, setPacientes }) => {
                       "La cantidad maxima de caracteres es de 30 digitos",
                   },
                 })}
+                onChange={(dato) => {
+                  setDatosPacientes({
+                    ...datosPacientes,
+                    nombreDuenio: dato.target.value,
+                  });
+                }}
               />
               <Form.Text className="text-danger">
                 {errors.nombreDuenio?.message}
               </Form.Text>
             </Form.Group>
-
             <Form.Group className="mb-3" controlId="apellidoDuenio">
               <Form.Label>Apellido del dueño*</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Ingrese un apellido"
+                defaultValue={datos.apellidoDuenio}
                 {...register("apellidoDuenio", {
                   required: "El apellido es un dato obligatorio",
                   minLength: {
@@ -94,6 +113,7 @@ const AgregarPaciente = ({ show, handleClose, setPacientes }) => {
               <Form.Control
                 type="email"
                 placeholder="name@email.com"
+                defaultValue={datos.email}
                 {...register("email", {
                   required: "El email es un dato obligatorio",
                   pattern: {
@@ -114,6 +134,7 @@ const AgregarPaciente = ({ show, handleClose, setPacientes }) => {
               <Form.Control
                 type="text"
                 placeholder="Ingrese una direccion."
+                defaultValue={datos.direccion}
                 {...register("direccion", {
                   required: "La direccion es un dato obligatorio",
                   minLength: {
@@ -137,6 +158,7 @@ const AgregarPaciente = ({ show, handleClose, setPacientes }) => {
               <Form.Control
                 type="text"
                 placeholder="Ingrese el nombre de la mascota"
+                defaultValue={datos.nombreMascota}
                 {...register("nombreMascota", {
                   required: "El nombre es un dato obligatorio",
                   minLength: {
@@ -158,11 +180,11 @@ const AgregarPaciente = ({ show, handleClose, setPacientes }) => {
             <Form.Group className="mb-3" controlId="especie">
               <Form.Label>Especie*</Form.Label>
               <Form.Select
+                defaultValue={datos.especie}
                 {...register("especie", {
                   required: "La especie es obligatoria",
                 })}
               >
-                <option value="">Seleccione una especie</option>
                 <option value="mamiferos">Mamiferos</option>
                 <option value="aves">Aves</option>
                 <option value="reptiles">Reptiles</option>
@@ -178,6 +200,7 @@ const AgregarPaciente = ({ show, handleClose, setPacientes }) => {
               <Form.Control
                 type="text"
                 placeholder="Ingrese la raza"
+                defaultValue={datos.raza}
                 {...register("raza", {
                   required: "La raza es un dato obligatorio",
                   minLength: {
@@ -202,6 +225,7 @@ const AgregarPaciente = ({ show, handleClose, setPacientes }) => {
                 type="date"
                 name="duedate"
                 placeholder="Seleccione la fecha de nacimiento"
+                defaultValue={fechaParseada(datos.fechaNacimiento)}
                 {...register("fechaNacimiento", {
                   required: "La fecha de nacimiento es obligatoria",
                 })}
@@ -218,6 +242,8 @@ const AgregarPaciente = ({ show, handleClose, setPacientes }) => {
               <Form.Control
                 type="number"
                 placeholder="Ingrese el peso"
+                defaultValue={datos.peso}
+                min={1}
                 {...register("peso", {
                   required: "El peso es un dato obligatorio",
                   min: {
@@ -238,6 +264,7 @@ const AgregarPaciente = ({ show, handleClose, setPacientes }) => {
             <Form.Group className="mb-3" controlId="plan">
               <Form.Label>Plan*</Form.Label>
               <Form.Select
+                defaultValue={datos.plan}
                 {...register("plan", {
                   required: "El plan es obligatorio",
                 })}
@@ -267,4 +294,4 @@ const AgregarPaciente = ({ show, handleClose, setPacientes }) => {
   );
 };
 
-export default AgregarPaciente;
+export default EditarPaciente;
