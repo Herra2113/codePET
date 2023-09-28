@@ -1,9 +1,9 @@
 import { Container, Row, Col, ListGroup } from "react-bootstrap";
-
+import { fechaParseada } from "../../helpers/turnos";
 const CardTurno = ({ turno }) => {
   return (
     <Container>
-      <Row className="border border-2 border-secondary p-0 mb-3">
+      <Row className="border border-2 border-warning p-0 mb-3">
         <Col xs={6} md={3} lg={2} className="p-0">
           <ListGroup className="list-group-flush border">
             <ListGroup.Item className="text-truncate overflow-hidden">
@@ -38,7 +38,10 @@ const CardTurno = ({ turno }) => {
               {turno.mascota}
             </ListGroup.Item>
             <ListGroup.Item className="text-truncate overflow-hidden">
-              {turno.fecha}
+              {fechaParseada(turno.fecha).replace(
+                /^(\d{4})-(\d{2})-(\d{2})$/g,
+                "$3/$2/$1"
+              )}
             </ListGroup.Item>
             <ListGroup.Item className="text-truncate overflow-hidden">
               {turno.hora}
