@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import CardTurno from "./admins/CardTurno";
 import { obtenerListaTurnos } from "../helpers/turnos";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const Administrador = () => {
   const [turnos, setTurnos] = useState([]);
@@ -21,15 +22,29 @@ const Administrador = () => {
   }, []);
 
   return (
-    <section className="container">
-      <div className="d-flex justify-content-between align-items-center mt-5">
-        <h1 className="display-4 ">Bienvenido Administrador</h1>
+    <section className="container my-3 fade-up">
+      <h1 className="fw-bold text-center titular">Panel Administrador</h1>
+      <div className="container text-center mt-5">
+        <div className="row justify-content-around">
+          <Link
+            className="btn btn-info col-8 col-md-5 mt-3"
+            to={"/administrador/paciente"}
+          >
+            Administrador Pacientes
+          </Link>
+          <Link
+            className="btn btn-warning col-8 col-md-5 mt-3"
+            to={"/administrador/turno"}
+          >
+            Administrador Turnos
+          </Link>
+        </div>
       </div>
-      <div className="bg-success-subtle p-3 rounded">
+      <div className="bg-success-subtle p-3 rounded mt-5">
         <h2 className="text-body-tertiary">Turnos asignados</h2>
         <div>
           {turnos.map((turno) => (
-            <CardTurno key={turno.id} turno={turno}></CardTurno>
+            <CardTurno key={turno._id} turno={turno}></CardTurno>
           ))}
         </div>
       </div>
