@@ -21,17 +21,10 @@ const Login = ({ setUsuarioLogueado }) => {
   const onSubmit = (usuario) => {
     setLoading(true);
     IniciarSesion(usuario)
-      .then((res) => {
-        if (res.error === false) {
-          sessionStorage.setItem(
-            "usuario",
-            JSON.stringify({
-              email: res.usuario.email,
-              nombreUsuario: res.usuario.nombreUsuario,
-              tipo: res.usuario.tipo,
-            })
-          );
-          setUsuarioLogueado(res);
+      .then((respuesta) => {
+        if (respuesta) {
+          sessionStorage.setItem("usuario", JSON.stringify(respuesta.email));
+          setUsuarioLogueado(respuesta);
           reset();
           Swal.fire("Bienvenido administrador");
           navegacion("/administrador");

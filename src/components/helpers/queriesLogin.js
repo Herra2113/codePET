@@ -9,7 +9,7 @@ export const IniciarSesion = async (usuario) => {
     });
     const respuesta = await consulta.json();
     localStorage.setItem("token", respuesta.token);
-    return respuesta;
+    return usuario;
   } catch (error) {
     console.log(error);
   }

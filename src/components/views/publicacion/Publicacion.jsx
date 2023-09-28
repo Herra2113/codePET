@@ -56,7 +56,7 @@ export function Publicacion() {
                             }}
                             style={{ width: "100%" }}
                             src={data?.imagen + ""}
-                            alt="Contacto codePET"
+                            alt="Contacto rolling vet"
                           />
                         )}
                       </div>
@@ -65,7 +65,7 @@ export function Publicacion() {
                       Etiquetas:
                       {data?.tags.map((t, ti) => (
                         <Badge key={ti} bg="dark m-1">
-                          #{t + ""}
+                          {t + ""}
                         </Badge>
                       ))}
                     </Col>
