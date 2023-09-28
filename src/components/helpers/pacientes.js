@@ -27,6 +27,8 @@ export const crearPaciente = async (paciente) => {
 
 export const editarPaciente = async (paciente, id) => {
   try {
+    console.log(paciente);
+    console.log(id);
     const respuesta = await fetch(URL_paciente + "/" + id, {
       method: "PUT",
       headers: {
@@ -46,7 +48,5 @@ export const borrarPaciente = async (id) => {
       method: "DELETE",
     });
     return respuesta;
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 };

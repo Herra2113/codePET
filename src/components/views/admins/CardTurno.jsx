@@ -3,7 +3,7 @@ import { fechaParseada } from "../../helpers/turnos";
 const CardTurno = ({ turno }) => {
   return (
     <Container>
-      <Row className="border border-2 border-warning p-0 mb-3">
+      <Row className="border border-2 border-black p-0 mb-3">
         <Col xs={6} md={3} lg={2} className="p-0">
           <ListGroup className="list-group-flush border">
             <ListGroup.Item className="text-truncate overflow-hidden">

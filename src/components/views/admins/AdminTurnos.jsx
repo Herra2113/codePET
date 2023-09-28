@@ -2,24 +2,26 @@ import { Table, Button } from "react-bootstrap";
 import { useState, useEffect, Fragment } from "react";
 import AgregarTurno from "./AgregarTurno";
 import Swal from "sweetalert2";
-import { obtenerListaTurnos, borrarTurno } from "../../helpers/turnos";
+import {
+  obtenerListaTurnos,
+  borrarTurno,
+  fechaParseada,
+} from "../../helpers/turnos";
 import EditarTurno from "./EditarTurno";
+import { Link } from "react-router-dom";
 
 const AdminTurnos = () => {
-  const [turnos, SetTurnos] = useState([]);
-  const [turnoEditar, SetTurnoEditar] = useState({});
+  const [turnos, setTurnos] = useState([]);
+  const [turnoEditar, setTurnoEditar] = useState({});
   const [show, setShow] = useState(false);
   const [showEditar, setShowEditar] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const handleCloseEditar = () => setShowEditar(false);
-  const handleShowEditar = () => setShowEditar(true);
-
   useEffect(() => {
     obtenerListaTurnos().then((respuestaListaTurnos) => {
       if (respuestaListaTurnos) {
-        SetTurnos(respuestaListaTurnos);
+        setTurnos(respuestaListaTurnos);
       } else {
         Swal.fire(
           "error",
@@ -29,9 +31,13 @@ const AdminTurnos = () => {
       }
     });
   }, []);
-
+  useEffect(() => {}, [turnoEditar]);
   const seleccionar = (id) => {
-    SetTurnoEditar(turnos.find((turno) => turno.id === id));
+    const turnoGuardado = turnos.find((turno) => turno._id === id);
+    if (turnoGuardado) {
+      setTurnoEditar(turnoGuardado);
+    }
+    setShowEditar(!showEditar);
   };
 
   const borrar = (id) => {
@@ -48,10 +54,9 @@ const AdminTurnos = () => {
       if (resultado.isConfirmed) {
         borrarTurno(id).then((respuesta) => {
           if (respuesta.status === 200) {
-            //Pedir la lista de productos a mi back
             obtenerListaTurnos().then((respuesta) => {
               if (respuesta) {
-                SetTurnos(respuesta);
+                setTurnos(respuesta);
               } else {
                 Swal.fire(
                   "Error",
@@ -75,10 +80,21 @@ const AdminTurnos = () => {
   };
 
   return (
-    <section className="container">
-      <div className="d-flex justify-content-between align-items-center mt-5">
-        <h1 className="display-4 ">Turnos</h1>
-        <Button className="btn btn-secondary" onClick={handleShow}>
+    <section className="container mt-5">
+      <div className="d-flex justify-content-center mt-5">
+        <h1 className="mt-5 fw-bold  p-2 titular fs-1">Listado de turnos</h1>
+      </div>
+      <div className="align-self-center mt-5 row justify-content-around">
+        <Link
+          to={"/administrador/paciente"}
+          className="btn btn-secondary col-8 col-md-5 mt-3"
+        >
+          Administrador de pacientes
+        </Link>
+        <Button
+          className="btn btn-dark  text-white col-8 col-md-5 mt-3"
+          onClick={handleShow}
+        >
           Agregar turno
         </Button>
       </div>
@@ -86,18 +102,18 @@ const AdminTurnos = () => {
       <Table responsive striped bordered hover>
         <thead>
           <tr>
-            <th>Detalle turno</th>
-            <th>Veterinario</th>
-            <th>Mascota</th>
-            <th>Fecha</th>
-            <th>Hora</th>
-            <th>Acciones</th>
+            <th className="bg-dark text-white">Detalle turno</th>
+            <th className="bg-secondary text-white">Mascota</th>
+            <th className="bg-dark text-white">Fecha</th>
+            <th className="bg-secondary text-white">Veterinario</th>
+            <th className="bg-dark text-white">Hora</th>
+            <th className="bg-secondary text-white">Acciones</th>
           </tr>
         </thead>
         <tbody>
-          {turnos.map((cita) => {
+          {turnos.map((cita, pi) => {
             return (
-              <Fragment key={cita.id}>
+              <Fragment key={pi}>
                 <tr>
                   <td className="text-truncate overflow-hidden">
                     {cita.detalleCita}
@@ -109,15 +125,17 @@ const AdminTurnos = () => {
                     {cita.mascota}
                   </td>
                   <td className="text-truncate overflow-hidden">
-                    {cita.fecha}
+                    {fechaParseada(cita.fecha).replace(
+                      /^(\d{4})-(\d{2})-(\d{2})$/g,
+                      "$3/$2/$1"
+                    )}
                   </td>
                   <td className="text-truncate overflow-hidden">{cita.hora}</td>
                   <td className="d-flex justify-content-end align-items-star">
                     <Button
-                      className="btn btn-warning me-2"
+                      className="btn btn-secondary me-2"
                       onClick={() => {
-                        handleShowEditar();
-                        seleccionar(cita.id);
+                        seleccionar(cita._id);
                       }}
                     >
                       <i className="bi bi-pencil-square p-0"></i>
@@ -125,7 +143,7 @@ const AdminTurnos = () => {
                     <Button
                       variant="danger"
                       onClick={() => {
-                        borrar(cita.id);
+                        borrar(cita._id);
                       }}
                     >
                       <i className="bi bi-file-x p-0"></i>
@@ -137,14 +155,24 @@ const AdminTurnos = () => {
           })}
         </tbody>
       </Table>
-      <EditarTurno
-        datos={turnoEditar}
-        showEditar={showEditar}
-        handleCloseEditar={handleCloseEditar}
-      ></EditarTurno>
-      <AgregarTurno show={show} handleClose={handleClose}></AgregarTurno>
+      {showEditar ? (
+        <EditarTurno
+          setTurnos={setTurnos}
+          turnoEditar={turnoEditar}
+          setShowEditar={setShowEditar}
+          showEditar={showEditar}
+        ></EditarTurno>
+      ) : (
+        <></>
+      )}
+      <AgregarTurno
+        setTurnos={setTurnos}
+        turnos={turnos}
+        show={show}
+        handleClose={handleClose}
+      ></AgregarTurno>
     </section>
-  ); //
+  );
 };
 
 export default AdminTurnos;

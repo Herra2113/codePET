@@ -63,7 +63,5 @@ export const borrarTurno = async (id) => {
       method: "DELETE",
     });
     return respuesta;
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 };

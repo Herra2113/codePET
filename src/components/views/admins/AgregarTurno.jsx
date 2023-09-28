@@ -1,34 +1,49 @@
+import { useState } from "react";
 import { Form, Button, Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { crearTurno } from "../../helpers/turnos";
+import { crearTurno, obtenerListaTurnos } from "../../helpers/turnos";
+import { obtenerFechaParaHTML } from "../../helpers";
 import Swal from "sweetalert2";
-
-const AgregarTurno = ({ show, handleClose }) => {
+const AgregarTurno = ({ show, handleClose, turnos, setTurnos }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm();
-
+  const [fechaActual, setFechaActual] = useState(obtenerFechaParaHTML());
+  const [loading, setLoading] = useState(false);
   const onSubmit = (turnoNuevo) => {
-    crearTurno(turnoNuevo).then((respuesta) => {
-      if (respuesta.status === 201) {
-        Swal.fire(
-          "Turno creado",
-          `El turno de ${turnoNuevo.mascota} se creo correctamente`,
-          "success"
-        ).then(() => window.location.reload());
-        reset();
-      } else {
-        Swal.fire(
-          "error",
-          "No se pudo crear el turno correctamente, vuelva a intentarlo más tarde",
-          "error"
-        );
-      }
-    });
-    // window.location.reload(); CONSULTAR OTRA ALTERNATIVA
+    setLoading(true);
+    crearTurno(turnoNuevo)
+      .then((respuesta) => {
+        if (respuesta.status === 201) {
+          Swal.fire(
+            "Turno creado",
+            `El turno de ${turnoNuevo.mascota} se creo correctamente`,
+            "success"
+          );
+          obtenerListaTurnos().then((respuestaListaTurnos) => {
+            if (respuestaListaTurnos) {
+              setTurnos(respuestaListaTurnos);
+            }
+          });
+          reset();
+        } else {
+          Swal.fire(
+            "error",
+            "No se pudo crear el turno correctamente, vuelva a intentarlo más tarde",
+            "error"
+          );
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire("error", "Error: " + err.message, "error");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
@@ -67,8 +82,8 @@ const AgregarTurno = ({ show, handleClose }) => {
               })}
             >
               <option value="">Seleccione un veterinario</option>
-              <option value="juan paz">Juan Paz</option>
-              <option value="gabriela ramos">Gabriela Ramos</option>
+              <option value="rosales cecilia">Rosales Cecilia</option>
+              <option value="robles jorge">Robles Jorge</option>
             </Form.Select>
             <Form.Text className="text-danger">
               {errors.veterinario?.message}
@@ -101,6 +116,7 @@ const AgregarTurno = ({ show, handleClose }) => {
               type="date"
               name="duedate"
               placeholder="Due date"
+              min={fechaActual}
               {...register("fecha", {
                 required: "La fecha es un dato obligatorio",
               })}
@@ -119,19 +135,40 @@ const AgregarTurno = ({ show, handleClose }) => {
             >
               <option value="">Seleccione un horario</option>
               <option value="8:00">8:00</option>
+              <option value="8:15">8:15</option>
+              <option value="8:30">8:30</option>
+              <option value="8:45">8:45</option>
               <option value="9:00">9:00</option>
+              <option value="9:15">9:15</option>
+              <option value="9:30">9:30</option>
+              <option value="9:45">9:45</option>
               <option value="10:00">10:00</option>
+              <option value="10:15">10:15</option>
+              <option value="10:30">10:30</option>
+              <option value="10:45">10:45</option>
               <option value="11:00">11:00</option>
+              <option value="11:15">11:15</option>
+              <option value="11:30">11:30</option>
+              <option value="11:45">11:45</option>
               <option value="12:00">12:00</option>
+              <option value="12:15">12:15</option>
+              <option value="12:30">12:30</option>
+              <option value="12:45">12:45</option>
               <option value="17:00">17:00</option>
+              <option value="17:15">17:15</option>
+              <option value="17:30">17:30</option>
+              <option value="17:45">17:45</option>
               <option value="18:00">18:00</option>
+              <option value="18:15">18:15</option>
+              <option value="18:30">18:30</option>
+              <option value="18:45">18:45</option>
+              <option value="19:00">19:00</option>
               <option value="19:00">19:00</option>
             </Form.Select>
             <Form.Text className="text-danger">
               {errors.hora?.message}
             </Form.Text>
           </Form.Group>
-
           <Form.Group className="mb-3" controlId="formaPago">
             <Form.Label>Forma de Pago*</Form.Label>
             <Form.Select
@@ -148,7 +185,12 @@ const AgregarTurno = ({ show, handleClose }) => {
               {errors.formaPago?.message}
             </Form.Text>
           </Form.Group>
-          <Button variant="primary" type="submit">
+          <Button
+            variant="secondary"
+            type="submit"
+            onClick={handleClose}
+            disabled={loading}
+          >
             Guardar
           </Button>
         </Form>

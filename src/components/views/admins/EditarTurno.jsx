@@ -99,8 +99,8 @@ const EditarTurno = ({ showEditar, setShowEditar, turnoEditar, setTurnos }) => {
               })}
             >
               <option value="">Seleccione un veterinario</option>
-              <option value="karen diaz">Karen Diaz</option>
-              <option value="gerardo marruecos">Gerardo Marruecos</option>
+              <option value="rosales cecilia">Rosales Cecilia</option>
+              <option value="robles jorge">Robles Jorge</option>
             </Form.Select>
             <Form.Text className="text-danger">
               {errors.veterinario?.message}
@@ -206,7 +206,7 @@ const EditarTurno = ({ showEditar, setShowEditar, turnoEditar, setTurnos }) => {
               {errors.formaPago?.message}
             </Form.Text>
           </Form.Group>
-          <Button variant="primary" type="submit" disabled={loading}>
+          <Button variant="secondary" type="submit" disabled={loading}>
             Guardar
           </Button>
         </Form>
