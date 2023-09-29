@@ -1,18 +1,20 @@
 import "./Footer.css";
-
+import logo from "/logo.png";
+import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <footer className="mb-3 pt-3 d-flex flex-column">
       <div className="d-md-flex justify-content-md-around">
         <div className="my-auto">
+          <img className="w-50 ps-5 ms-5" src={logo} id="logoFooter" />
           <p className="text-center mb-1 fs-4">Nuestras Redes</p>
           <div className="d-flex justify-content-center">
-            <a href="/*">
+            <Link to="/*">
               <i className="bi bi-facebook mx-3 fs-1 links-redes"></i>
-            </a>
-            <a href="/*">
+            </Link>
+            <Link to="/*">
               <i className="bi bi-instagram mx-3 fs-1 links-redes"></i>
-            </a>
+            </Link>
           </div>
         </div>
         <section className="my-4">
