@@ -36,14 +36,18 @@ const EditarTurno = ({ showEditar, setShowEditar, turnoEditar, setTurnos }) => {
         } else {
           Swal.fire(
             "error",
-            "No se pudo editar el turno correctamente, vuelva a intentarlo más tarde",
+            "No se pudo editar el turno correctamente, Excepcion no controlada o Error de Servidor, vuelva a intentarlo más tarde",
             "error"
           );
         }
       })
       .catch((err) => {
         console.log(err);
-        Swal.fire("error", "Error: " + err.message, "error");
+        Swal.fire(
+          "error",
+          "Error, Excepcion no controlada o Error de Servidor: " + err.message,
+          "error"
+        );
       })
       .finally(() => {
         setLoading(false);
@@ -76,6 +80,10 @@ const EditarTurno = ({ showEditar, setShowEditar, turnoEditar, setTurnos }) => {
                 maxLength: {
                   value: 100,
                   message: "La cantidad maxima de caracteres es de 100 digitos",
+                },
+                pattern: {
+                  value: /^(?!\s*$).+/,
+                  message: "Debe escribir algo coherente",
                 },
               })}
               onChange={(dt) => {
@@ -121,6 +129,12 @@ const EditarTurno = ({ showEditar, setShowEditar, turnoEditar, setTurnos }) => {
                 maxLength: {
                   value: 100,
                   message: "La cantidad maxima de caracteres es de 100 digitos",
+                },
+                pattern: {
+                  value:
+                    /^[A-Z][a-zA-Z0-9\u00f1\u00d1]*(?: [A-Z][a-zA-Z0-9\u00f1\u00d1]*)*(?: [A-Z][a-zA-Z0-9\u00f1\u00d1]*)?$/,
+                  message:
+                    "No debe contener caracteres especiales(Pj. @#:;), cada nombre debe comenzar con mayuscula, maximo tres apellidos",
                 },
               })}
             />
