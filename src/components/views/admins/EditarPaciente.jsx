@@ -337,7 +337,7 @@ const EditarPaciente = ({
                 {errors.plan?.message}
               </Form.Text>
             </Form.Group>
-            <Button variant="primary" type="submit" disabled={loading}>
+            <Button variant="secondary" type="submit" disabled={loading}>
               Guardar
             </Button>
           </Form>

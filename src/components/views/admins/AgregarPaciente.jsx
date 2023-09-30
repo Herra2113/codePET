@@ -298,7 +298,7 @@ const AgregarPaciente = ({ show, handleClose, setPacientes }) => {
                 {errors.plan?.message}
               </Form.Text>
             </Form.Group>
-            <Button variant="primary" type="submit">
+            <Button variant="secondary" type="submit">
               Guardar
             </Button>
           </Form>
