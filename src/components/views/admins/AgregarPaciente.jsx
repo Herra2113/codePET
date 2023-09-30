@@ -11,28 +11,46 @@ const AgregarPaciente = ({ show, handleClose, setPacientes }) => {
     reset,
   } = useForm();
   const onSubmit = (pacienteNuevo) => {
-    crearPaciente(pacienteNuevo).then((respuesta) => {
-      if (respuesta.status === 201) {
+    crearPaciente(pacienteNuevo)
+      .then((respuesta) => {
+        if (respuesta.status === 201) {
+          Swal.fire(
+            "Paciente creado",
+            `El paciente ${pacienteNuevo.nombreMascota} se creo correctamente`,
+            "success"
+          );
+          reset();
+          handleClose();
+          obtenerListaPacientes()
+            .then((respuesta) => {
+              if (respuesta) {
+                setPacientes(respuesta);
+              }
+            })
+            .catch((err) => {
+              Swal.fire(
+                "Error",
+                "Excepión no controlada o Error de servidor, vuelva a intentar mas tarde: " +
+                  err.message,
+                "error"
+              );
+            });
+        } else {
+          Swal.fire(
+            "Error",
+            "Excepcion no contralada o Error de servidor. No se pudo crear el paciente correctamente, vuelva a intentarlo más tarde",
+            "error"
+          );
+        }
+      })
+      .catch((err) => {
         Swal.fire(
-          "Paciente creado",
-          `El paciente ${pacienteNuevo.nombreMascota} se creo correctamente`,
-          "success"
-        );
-        reset();
-        handleClose();
-        obtenerListaPacientes().then((respuesta) => {
-          if (respuesta) {
-            setPacientes(respuesta);
-          }
-        });
-      } else {
-        Swal.fire(
-          "error",
-          "No se pudo crear el paciente correctamente, vuelva a intentarlo más tarde",
+          "Error",
+          "Excepión no controlada o Error de servidor, vuelva a intentar mas tarde: " +
+            err.message,
           "error"
         );
-      }
-    });
+      });
     reset();
   };
   return (
@@ -55,9 +73,15 @@ const AgregarPaciente = ({ show, handleClose, setPacientes }) => {
                     message: "La cantidad minima de caracteres es de 2 digitos",
                   },
                   maxLength: {
-                    value: 30,
+                    value: 60,
                     message:
-                      "La cantidad maxima de caracteres es de 30 digitos",
+                      "La cantidad maxima de caracteres es de 60 digitos",
+                  },
+                  pattern: {
+                    value:
+                      /^[A-Z][a-zA-Z0-9\u00f1\u00d1]*(?: [A-Z][a-zA-Z0-9\u00f1\u00d1]*)*(?: [A-Z][a-zA-Z0-9\u00f1\u00d1]*)?$/,
+                    message:
+                      "No debe contener caracteres especiales (Pj. @#:;), cada nombre debe comenzar con mayuscula, maximo tres nombres",
                   },
                 })}
               />
@@ -65,7 +89,6 @@ const AgregarPaciente = ({ show, handleClose, setPacientes }) => {
                 {errors.nombreDuenio?.message}
               </Form.Text>
             </Form.Group>
-
             <Form.Group className="mb-3" controlId="apellidoDuenio">
               <Form.Label>Apellido del dueño*</Form.Label>
               <Form.Control
@@ -78,9 +101,15 @@ const AgregarPaciente = ({ show, handleClose, setPacientes }) => {
                     message: "La cantidad minima de caracteres es de 2 digitos",
                   },
                   maxLength: {
-                    value: 30,
+                    value: 60,
                     message:
-                      "La cantidad maxima de caracteres es de 30 digitos",
+                      "La cantidad maxima de caracteres es de 60 digitos",
+                  },
+                  pattern: {
+                    value:
+                      /^[A-Z][a-zA-Z0-9\u00f1\u00d1]*(?: [A-Z][a-zA-Z0-9\u00f1\u00d1]*)*(?: [A-Z][a-zA-Z0-9\u00f1\u00d1]*)?$/,
+                    message:
+                      "No debe contener caracteres especiales(Pj. @#:;), cada nombre debe comenzar con mayuscula, maximo tres apellidos",
                   },
                 })}
               />
@@ -88,7 +117,6 @@ const AgregarPaciente = ({ show, handleClose, setPacientes }) => {
                 {errors.apellidoDuenio?.message}
               </Form.Text>
             </Form.Group>
-
             <Form.Group className="mb-3" controlId="email">
               <Form.Label>Ingrese un correo electronico*</Form.Label>
               <Form.Control
@@ -108,7 +136,6 @@ const AgregarPaciente = ({ show, handleClose, setPacientes }) => {
                 {errors.email?.message}
               </Form.Text>
             </Form.Group>
-
             <Form.Group className="mb-3" controlId="direccion">
               <Form.Label>Ingrese el domicilio*</Form.Label>
               <Form.Control
@@ -125,13 +152,16 @@ const AgregarPaciente = ({ show, handleClose, setPacientes }) => {
                     message:
                       "La cantidad maxima de caracteres es de 50 digitos",
                   },
+                  pattern: {
+                    value: /^[A-Za-z][a-zA-Z0-9. ]*$/,
+                    message: "No debe contener caracteres especiales Pj. @#:;",
+                  },
                 })}
               />
               <Form.Text className="text-danger">
                 {errors.direccion?.message}
               </Form.Text>
             </Form.Group>
-
             <Form.Group className="mb-3" controlId="nombreMascota">
               <Form.Label>Nombre Mascota*</Form.Label>
               <Form.Control
@@ -144,9 +174,15 @@ const AgregarPaciente = ({ show, handleClose, setPacientes }) => {
                     message: "La cantidad minima de caracteres es de 2 digitos",
                   },
                   maxLength: {
-                    value: 30,
+                    value: 60,
                     message:
-                      "La cantidad maxima de caracteres es de 30 digitos",
+                      "La cantidad maxima de caracteres es de 60 digitos",
+                  },
+                  pattern: {
+                    value:
+                      /^[A-Z][a-zA-Z0-9]*(?: [A-Z][a-zA-Z0-9]*)*(?: [A-Z][a-zA-Z0-9]*)?$/,
+                    message:
+                      "No debe contener caracteres especiales(Pj. @#:;), cada nombre debe comenzar con mayuscula, maximo tres nombres",
                   },
                 })}
               />
@@ -172,7 +208,6 @@ const AgregarPaciente = ({ show, handleClose, setPacientes }) => {
                 {errors.especie?.message}
               </Form.Text>
             </Form.Group>
-
             <Form.Group className="mb-3" controlId="raza">
               <Form.Label>Raza*</Form.Label>
               <Form.Control
@@ -185,9 +220,15 @@ const AgregarPaciente = ({ show, handleClose, setPacientes }) => {
                     message: "La cantidad minima de caracteres es de 2 digitos",
                   },
                   maxLength: {
-                    value: 30,
+                    value: 60,
                     message:
-                      "La cantidad maxima de caracteres es de 30 digitos",
+                      "La cantidad maxima de caracteres es de 60 digitos",
+                  },
+                  pattern: {
+                    value:
+                      /^[A-Z][a-zA-Z0-9]*(?: [A-Z][a-zA-Z0-9]*)*(?: [A-Z][a-zA-Z0-9]*)?$/,
+                    message:
+                      "No debe contener caracteres especiales(Pj. @#:;), cada palabra debe comenzar con mayuscula, maximo tres palabras",
                   },
                 })}
               />
@@ -195,7 +236,6 @@ const AgregarPaciente = ({ show, handleClose, setPacientes }) => {
                 {errors.raza?.message}
               </Form.Text>
             </Form.Group>
-
             <Form.Group controlId="fechaNacimiento">
               <Form.Label>Fecha de Nacimiento*</Form.Label>
               <Form.Control
@@ -212,17 +252,19 @@ const AgregarPaciente = ({ show, handleClose, setPacientes }) => {
                 )}
               </Form.Text>
             </Form.Group>
-
             <Form.Group className="mb-3" controlId="peso">
               <Form.Label>Peso (en kg)*</Form.Label>
               <Form.Control
                 type="number"
                 placeholder="Ingrese el peso"
+                step={0.1}
+                min={0.1}
+                max={100}
                 {...register("peso", {
                   required: "El peso es un dato obligatorio",
                   min: {
-                    value: 1,
-                    message: "El peso minimo es de 1kg",
+                    value: 0.1,
+                    message: "El peso minimo es de 0.1kg",
                   },
                   max: {
                     value: 100,
@@ -234,7 +276,6 @@ const AgregarPaciente = ({ show, handleClose, setPacientes }) => {
                 {errors.peso?.message}
               </Form.Text>
             </Form.Group>
-
             <Form.Group className="mb-3" controlId="plan">
               <Form.Label>Plan*</Form.Label>
               <Form.Select

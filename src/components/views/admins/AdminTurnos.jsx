@@ -103,9 +103,9 @@ const AdminTurnos = () => {
         <thead>
           <tr>
             <th className="bg-dark text-white">Detalle turno</th>
-            <th className="bg-secondary text-white">Mascota</th>
-            <th className="bg-dark text-white">Fecha</th>
             <th className="bg-secondary text-white">Veterinario</th>
+            <th className="bg-dark text-white">Mascota</th>
+            <th className="bg-secondary text-white">Fecha</th>
             <th className="bg-dark text-white">Hora</th>
             <th className="bg-secondary text-white">Acciones</th>
           </tr>

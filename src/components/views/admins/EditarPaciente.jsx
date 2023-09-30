@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { editarPaciente, obtenerListaPacientes } from "../../helpers/pacientes";
 import { fechaParseada } from "../../helpers/turnos";
+import { useEffect } from "react";
 
 const EditarPaciente = ({
   showEditar,
@@ -17,34 +18,57 @@ const EditarPaciente = ({
     formState: { errors },
     reset,
   } = useForm();
-
+  const [loading, setLoading] = useState(false);
   const [datosPacientes, setDatosPacientes] = useState(datos);
 
   const onSubmit = (pacienteEditado) => {
-    editarPaciente(pacienteEditado, datos._id).then((respuesta) => {
-      if (respuesta) {
-        Swal.fire(
-          "Paciente editado",
-          `El paciente  ${pacienteEditado.nombreMascota} se editó correctamente`,
-          "success"
-        );
-        obtenerListaPacientes().then((respuesta) => {
-          console.log("entra");
-          if (respuesta) {
-            console.log("entra2");
-            setPacientes(respuesta);
-          }
-        });
-        reset();
-        handleCloseEditar();
-      } else {
+    setLoading(true);
+    editarPaciente(pacienteEditado, datos._id)
+      .then((respuesta) => {
+        if (respuesta) {
+          Swal.fire(
+            "Paciente editado",
+            `El paciente  ${pacienteEditado.nombreMascota} se editó correctamente`,
+            "success"
+          );
+          obtenerListaPacientes()
+            .then((respuesta) => {
+              if (respuesta) {
+                setPacientes(respuesta);
+              }
+            })
+            .catch((err) => {
+              Swal.fire(
+                "error",
+                "No se pudo editar el paciente correctamente, Excepcion no controlada o Error de Servidor, vuelva a intentarlo más tarde: " +
+                  err.message,
+                "error"
+              );
+            })
+            .finally(() => {
+              setLoading(false);
+            });
+          reset();
+          handleCloseEditar();
+        } else {
+          Swal.fire(
+            "error",
+            "No se pudo editar el paciente correctamente, Excepcion no controlada o Error de Servidor,vuelva a intentarlo más tarde",
+            "error"
+          );
+        }
+      })
+      .catch((err) => {
         Swal.fire(
           "error",
-          "No se pudo editar el paciente correctamente, vuelva a intentarlo más tarde",
+          "No se pudo editar el paciente correctamente, Excepcion no controlada o Error de Servidor, vuelva a intentarlo más tarde: " +
+            err.message,
           "error"
         );
-      }
-    });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
@@ -68,9 +92,15 @@ const EditarPaciente = ({
                     message: "La cantidad minima de caracteres es de 2 digitos",
                   },
                   maxLength: {
-                    value: 30,
+                    value: 60,
                     message:
-                      "La cantidad maxima de caracteres es de 30 digitos",
+                      "La cantidad maxima de caracteres es de 60 digitos",
+                  },
+                  pattern: {
+                    value:
+                      /^[A-Z][a-zA-Z0-9]*(?: [A-Z][a-zA-Z0-9]*)*(?: [A-Z][a-zA-Z0-9]*)?$/,
+                    message:
+                      "No debe contener caracteres especiales (Pj. @#:;), cada nombre debe comenzar con mayuscula, maximo tres nombres",
                   },
                 })}
                 onChange={(dato) => {
@@ -97,9 +127,15 @@ const EditarPaciente = ({
                     message: "La cantidad minima de caracteres es de 2 digitos",
                   },
                   maxLength: {
-                    value: 30,
+                    value: 60,
                     message:
-                      "La cantidad maxima de caracteres es de 30 digitos",
+                      "La cantidad maxima de caracteres es de 60 digitos",
+                  },
+                  pattern: {
+                    value:
+                      /^[A-Z][a-zA-Z0-9]*(?: [A-Z][a-zA-Z0-9]*)*(?: [A-Z][a-zA-Z0-9]*)?$/,
+                    message:
+                      "No debe contener caracteres especiales (Pj. @#:;), cada nombre debe comenzar con mayuscula, maximo tres nombres",
                   },
                 })}
               />
@@ -146,6 +182,10 @@ const EditarPaciente = ({
                     message:
                       "La cantidad maxima de caracteres es de 50 digitos",
                   },
+                  pattern: {
+                    value: /^[A-Za-z][a-zA-Z0-9. ]*$/,
+                    message: "No debe contener caracteres especiales Pj. @#:;",
+                  },
                 })}
               />
               <Form.Text className="text-danger">
@@ -166,9 +206,15 @@ const EditarPaciente = ({
                     message: "La cantidad minima de caracteres es de 2 digitos",
                   },
                   maxLength: {
-                    value: 30,
+                    value: 60,
                     message:
-                      "La cantidad maxima de caracteres es de 30 digitos",
+                      "La cantidad maxima de caracteres es de 60 digitos",
+                  },
+                  pattern: {
+                    value:
+                      /^[A-Z][a-zA-Z0-9]*(?: [A-Z][a-zA-Z0-9]*)*(?: [A-Z][a-zA-Z0-9]*)?$/,
+                    message:
+                      "No debe contener caracteres especiales(Pj. @#:;), cada nombre debe comenzar con mayuscula, maximo tres nombres",
                   },
                 })}
               />
@@ -194,7 +240,6 @@ const EditarPaciente = ({
                 {errors.especie?.message}
               </Form.Text>
             </Form.Group>
-
             <Form.Group className="mb-3" controlId="raza">
               <Form.Label>Raza*</Form.Label>
               <Form.Control
@@ -208,9 +253,15 @@ const EditarPaciente = ({
                     message: "La cantidad minima de caracteres es de 2 digitos",
                   },
                   maxLength: {
-                    value: 30,
+                    value: 60,
                     message:
-                      "La cantidad maxima de caracteres es de 30 digitos",
+                      "La cantidad maxima de caracteres es de 60 digitos",
+                  },
+                  pattern: {
+                    value:
+                      /^[A-Z][a-zA-Z0-9]*(?: [A-Z][a-zA-Z0-9]*)*(?: [A-Z][a-zA-Z0-9]*)?$/,
+                    message:
+                      "No debe contener caracteres especiales(Pj. @#:;), cada palabra debe comenzar con mayuscula, maximo tres palabras",
                   },
                 })}
               />
@@ -242,13 +293,15 @@ const EditarPaciente = ({
               <Form.Control
                 type="number"
                 placeholder="Ingrese el peso"
+                step={0.1}
+                min={0.1}
+                max={100}
                 defaultValue={datos.peso}
-                min={1}
                 {...register("peso", {
                   required: "El peso es un dato obligatorio",
                   min: {
-                    value: 1,
-                    message: "El peso minimo es de 1kg",
+                    value: 0.1,
+                    message: "El peso minimo es de 0.1kg",
                   },
                   max: {
                     value: 100,
@@ -284,7 +337,7 @@ const EditarPaciente = ({
                 {errors.plan?.message}
               </Form.Text>
             </Form.Group>
-            <Button variant="secondary" type="submit">
+            <Button variant="secondary" type="submit" disabled={loading}>
               Guardar
             </Button>
           </Form>
